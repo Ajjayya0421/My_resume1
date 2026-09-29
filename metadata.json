@@ -2,5 +2,7 @@
   "name": "Ajjayya N H | Software Developer Portfolio",
   "description": "Portfolio of Ajjayya N H – Computer Science & Engineering student, Software Developer specializing in Java, Python, and Database Applications.",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }

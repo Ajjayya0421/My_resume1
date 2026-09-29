@@ -1,3 +1,7 @@
+import avatarImg from '../assets/images/avatar_ajjayya_user_1790665570333.jpg';
+import collegeImg from '../assets/images/college_management_system_1790664611042.jpg';
+import badmintonImg from '../assets/images/badminton_state_sports_1790664623880.jpg';
+
 export interface Project {
   id: string;
   title: string;
@@ -101,7 +105,7 @@ export const portfolioData: PortfolioData = {
       "Motivated third-year Computer Science and Engineering student with a strong academic record of 8.80 CGPA and a solid foundation in C, Java, Python, HTML, MySQL, and MongoDB. Experienced in developing a College Management System using Advanced Java and database connectivity. Passionate about software development, system architecture, and building practical technology solutions while continuously improving programming and problem-solving skills.",
     cgpa: "8.80",
     college: "Alva's Institute of Engineering and Technology, Mijar | VTU",
-    avatar: "/src/assets/images/avatar_ajjayya_user_1790665570333.jpg",
+    avatar: avatarImg,
     availability: "Actively seeking Software Engineering Internships & Full-time Roles",
   },
   careerInterests: [
@@ -224,7 +228,7 @@ export const portfolioData: PortfolioData = {
         "Engineered relational database schema in MySQL featuring primary-foreign key integrity, cascade updates, and optimized indexed queries.",
         "Applied Advanced Java concepts including custom event listeners, layout managers, multithreaded database fetch routines, and modular MVC architecture.",
       ],
-      image: "/src/assets/images/college_management_system_1790664611042.jpg",
+      image: collegeImg,
       highlights: [
         "Comprehensive Student & Faculty Records Automation",
         "Zero-Data Loss with Transactional Commit/Rollback",
@@ -363,7 +367,7 @@ public class DBConnectionManager {
         "Implemented real-time status management for campus grievances with escalation timestamps.",
         "Employed relational foreign key constraints ensuring zero over-allocation of room capacities.",
       ],
-      image: "/src/assets/images/college_management_system_1790664611042.jpg",
+      image: collegeImg,
       highlights: [
         "Capacity-Safe Room Allocation Logic",
         "Maintenance Ticket Tracking Workflow",
@@ -452,7 +456,7 @@ public class DBConnectionManager {
     {
       title: "State-Level Badminton Player",
       category: "Athletics & Sports Excellence",
-      image: "/src/assets/images/badminton_state_sports_1790664623880.jpg",
+      image: badmintonImg,
       description:
         "Represented at prestigious state-level badminton championship tournaments. Competing at this high tier cultivated intense mental focus, rapid split-second decision making, endurance, resilience in high-pressure matches, and deep sportsmanship.",
       takeaway:

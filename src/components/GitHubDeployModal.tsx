@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { portfolioData } from '../data/portfolioData';
 import { 
   X, 
   Github, 
@@ -7,11 +6,13 @@ import {
   Check, 
   Copy, 
   ExternalLink, 
-  Rocket, 
-  GitBranch, 
-  CheckCircle2, 
+  Download, 
+  UploadCloud, 
+  FolderDown, 
   AlertCircle,
-  FileCode
+  FileCode,
+  Sparkles,
+  Layers
 } from 'lucide-react';
 
 interface GitHubDeployModalProps {
@@ -20,7 +21,7 @@ interface GitHubDeployModalProps {
 }
 
 export const GitHubDeployModal: React.FC<GitHubDeployModalProps> = ({ isOpen, onClose }) => {
-  const [activeTab, setActiveTab] = useState<'actions' | 'cli'>('actions');
+  const [activeTab, setActiveTab] = useState<'direct-upload' | 'terminal' | 'github-actions'>('direct-upload');
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
   if (!isOpen) return null;
@@ -31,29 +32,32 @@ export const GitHubDeployModal: React.FC<GitHubDeployModalProps> = ({ isOpen, on
     setTimeout(() => setCopiedKey(null), 2000);
   };
 
-  const gitPushScript = `# 1. Initialize local git repository
+  const gitPushScript = `# 1. Navigate to the extracted portfolio folder in your terminal:
+cd path/to/portfolio-extracted
+
+# 2. Initialize local git repository
 git init
 
-# 2. Stage all portfolio files
+# 3. Stage all portfolio files
 git add .
 
-# 3. Create your initial commit
+# 4. Create your initial commit
 git commit -m "feat: complete professional portfolio for Ajjayya N H"
 
-# 4. Set main branch
+# 5. Set main branch
 git branch -M main
 
-# 5. Link to your GitHub repository
+# 6. Link to your GitHub repository
 git remote add origin https://github.com/Ajjayya0421/portfolio.git
 
-# 6. Push code to GitHub
+# 7. Push code to GitHub
 git push -u origin main`;
 
   const githubActionsWorkflow = `name: Deploy Portfolio to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main, master]
   workflow_dispatch:
 
 permissions:
@@ -79,13 +83,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
 
       - name: Install Dependencies
-        run: npm ci || npm install
+        run: |
+          npm install --legacy-peer-deps
 
-      - name: Build Production Assets
-        run: npm run build
+      - name: Build Production Bundle
+        run: |
+          npm run build
 
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
@@ -99,33 +104,24 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4`;
 
-  const ghPagesCliScript = `# 1. Install the official gh-pages deployment package
-npm install -D gh-pages
-
-# 2. Build your production bundle
-npm run build
-
-# 3. Deploy the dist folder to the gh-pages branch
-npx gh-pages -d dist`;
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-950/80 backdrop-blur-md overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-950/85 backdrop-blur-md overflow-y-auto">
       <div 
         className="relative w-full max-w-3xl bg-slate-900 border border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden my-auto max-h-[92vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Header */}
-        <div className="p-5 sm:px-6 bg-slate-900 border-b border-slate-800 flex items-center justify-between shrink-0">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-amber-400/10 border border-amber-400/30 flex items-center justify-center text-amber-400">
-              <Github className="w-4 h-4" />
+        <div className="p-4 sm:p-5 bg-slate-900 border-b border-slate-800 flex items-center justify-between shrink-0">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-lg bg-amber-400/10 border border-amber-400/30 flex items-center justify-center text-amber-400">
+              <Github className="w-5 h-5" />
             </div>
             <div>
               <h3 className="text-base font-bold text-white tracking-tight">
-                How to Deploy to GitHub Pages
+                Upload & Deploy to GitHub (Ajjayya0421)
               </h3>
               <p className="text-xs text-slate-400">
-                Step-by-step deployment guide for Ajjayya0421
+                Guaranteed zero-error instructions to get your portfolio live
               </p>
             </div>
           </div>
@@ -133,198 +129,239 @@ npx gh-pages -d dist`;
           <button
             onClick={onClose}
             className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"
-            aria-label="Close deploy modal"
+            aria-label="Close modal"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Modal Body */}
-        <div className="overflow-y-auto p-6 space-y-6 text-sm">
+        <div className="overflow-y-auto p-5 sm:p-6 space-y-6 text-sm">
           
-          {/* Quick Info Box */}
-          <div className="p-4 bg-slate-950 border border-slate-800 rounded-xl space-y-2">
-            <div className="flex items-center justify-between text-xs text-slate-300">
-              <span className="font-semibold text-white">Your GitHub Profile:</span>
-              <a 
-                href="https://github.com/Ajjayya0421" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-amber-400 hover:underline flex items-center gap-1"
+          {/* Step 0: Download Zip Cards Banner */}
+          <div className="p-4 sm:p-5 bg-gradient-to-r from-amber-500/10 via-slate-900 to-blue-500/10 border border-amber-400/30 rounded-xl space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <FolderDown className="w-4 h-4 text-amber-400" />
+                <span className="text-xs font-bold text-white uppercase tracking-wider">
+                  Step 1: Download Your Project Files First
+                </span>
+              </div>
+              <span className="text-xs text-amber-400 font-semibold">1-Click Direct Download</span>
+            </div>
+
+            <p className="text-xs text-slate-300 leading-relaxed">
+              Because this website is currently running in your preview environment, you need to download the project files to your device before uploading them to your GitHub account:
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+              <a
+                href="./portfolio-complete.zip"
+                download="portfolio-complete.zip"
+                className="flex items-center justify-center gap-2 px-4 py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs rounded-lg transition-all shadow-md text-center"
               >
-                <span>github.com/Ajjayya0421</span>
-                <ExternalLink className="w-3 h-3" />
+                <Download className="w-4 h-4" />
+                <span>Download Complete Project (ZIP)</span>
+              </a>
+
+              <a
+                href="./portfolio-production-build.zip"
+                download="portfolio-dist.zip"
+                className="flex items-center justify-center gap-2 px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-medium text-xs rounded-lg border border-slate-700 transition-all text-center"
+              >
+                <Layers className="w-4 h-4 text-amber-400" />
+                <span>Download Pre-built Dist (ZIP)</span>
               </a>
             </div>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Once deployed, your portfolio will be live at{' '}
-              <code className="text-amber-300 font-mono">https://ajjayya0421.github.io/portfolio/</code> (or your custom domain).
-            </p>
+
+            <div className="text-[11px] text-slate-400">
+              * Includes all source code, your photo, College Management System simulator, and GitHub Actions workflow.
+            </div>
           </div>
 
-          {/* Step 1: Create GitHub Repo */}
+          {/* Method Selection Tabs */}
           <div className="space-y-3">
-            <div className="flex items-center gap-2">
-              <span className="w-6 h-6 rounded-full bg-amber-400 text-slate-950 font-bold text-xs flex items-center justify-center shrink-0">
-                1
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-300">
+                Step 2: Choose How You Want to Upload
               </span>
-              <h4 className="text-sm font-bold text-white">
-                Create a New Repository on GitHub
-              </h4>
-            </div>
-            <div className="text-xs text-slate-300 pl-8 space-y-1">
-              <p>
-                1. Go to <a href="https://github.com/new" target="_blank" rel="noreferrer" className="text-amber-400 underline">github.com/new</a>.
-              </p>
-              <p>
-                2. Set Repository Name to <code className="text-white font-mono bg-slate-800 px-1.5 py-0.5 rounded">portfolio</code> (or <code className="text-white font-mono bg-slate-800 px-1.5 py-0.5 rounded">Ajjayya0421.github.io</code>).
-              </p>
-              <p>
-                3. Choose <strong className="text-white">Public</strong> and click <strong className="text-white">Create repository</strong>.
-              </p>
-            </div>
-          </div>
-
-          {/* Step 2: Push Code */}
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-amber-400 text-slate-950 font-bold text-xs flex items-center justify-center shrink-0">
-                  2
-                </span>
-                <h4 className="text-sm font-bold text-white">
-                  Push Local Project to GitHub
-                </h4>
-              </div>
-              <button
-                onClick={() => copyCode(gitPushScript, 'gitPush')}
-                className="flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 rounded-md transition-colors"
-              >
-                {copiedKey === 'gitPush' ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
-                <span>{copiedKey === 'gitPush' ? 'Copied' : 'Copy Commands'}</span>
-              </button>
-            </div>
-
-            <div className="pl-8">
-              <div className="bg-slate-950 rounded-xl p-4 font-mono text-xs text-slate-200 border border-slate-800 overflow-x-auto">
-                <pre>{gitPushScript}</pre>
-              </div>
-            </div>
-          </div>
-
-          {/* Step 3: Choose Deployment Method */}
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-amber-400 text-slate-950 font-bold text-xs flex items-center justify-center shrink-0">
-                  3
-                </span>
-                <h4 className="text-sm font-bold text-white">
-                  Enable Free GitHub Pages Hosting
-                </h4>
-              </div>
 
               {/* Segmented Switch */}
               <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-lg border border-slate-800">
                 <button
-                  onClick={() => setActiveTab('actions')}
-                  className={`px-2.5 py-1 text-xs font-medium rounded-md transition-colors ${
-                    activeTab === 'actions' ? 'bg-amber-400 text-slate-950 font-semibold' : 'text-slate-400 hover:text-white'
+                  onClick={() => setActiveTab('direct-upload')}
+                  className={`px-3 py-1 text-xs font-medium rounded-md transition-colors ${
+                    activeTab === 'direct-upload'
+                      ? 'bg-amber-400 text-slate-950 font-semibold shadow-sm'
+                      : 'text-slate-400 hover:text-white'
                   }`}
                 >
-                  GitHub Actions (Recommended)
+                  Drag & Drop (Easiest)
                 </button>
                 <button
-                  onClick={() => setActiveTab('cli')}
-                  className={`px-2.5 py-1 text-xs font-medium rounded-md transition-colors ${
-                    activeTab === 'cli' ? 'bg-amber-400 text-slate-950 font-semibold' : 'text-slate-400 hover:text-white'
+                  onClick={() => setActiveTab('terminal')}
+                  className={`px-3 py-1 text-xs font-medium rounded-md transition-colors ${
+                    activeTab === 'terminal'
+                      ? 'bg-amber-400 text-slate-950 font-semibold shadow-sm'
+                      : 'text-slate-400 hover:text-white'
                   }`}
                 >
-                  gh-pages CLI
+                  Git Terminal
+                </button>
+                <button
+                  onClick={() => setActiveTab('github-actions')}
+                  className={`px-3 py-1 text-xs font-medium rounded-md transition-colors ${
+                    activeTab === 'github-actions'
+                      ? 'bg-amber-400 text-slate-950 font-semibold shadow-sm'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  GitHub Actions YAML
                 </button>
               </div>
             </div>
 
-            <div className="pl-8 space-y-3">
-              {activeTab === 'actions' ? (
-                <div className="space-y-3">
-                  <p className="text-xs text-slate-300">
-                    Create a file in your project at{' '}
-                    <code className="text-amber-300 font-mono">.github/workflows/deploy.yml</code> and paste the workflow below. GitHub will build and host your portfolio automatically on every git push!
-                  </p>
-
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-mono text-slate-400 flex items-center gap-1.5">
-                      <FileCode className="w-3.5 h-3.5 text-amber-400" />
-                      <span>.github/workflows/deploy.yml</span>
-                    </span>
-                    <button
-                      onClick={() => copyCode(githubActionsWorkflow, 'workflow')}
-                      className="flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 rounded-md transition-colors"
-                    >
-                      {copiedKey === 'workflow' ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
-                      <span>{copiedKey === 'workflow' ? 'Copied Workflow' : 'Copy Workflow YAML'}</span>
-                    </button>
-                  </div>
-
-                  <div className="bg-slate-950 rounded-xl p-4 font-mono text-xs text-slate-200 border border-slate-800 overflow-x-auto max-h-56">
-                    <pre>{githubActionsWorkflow}</pre>
-                  </div>
-
-                  <div className="p-3 bg-slate-950 rounded-lg border border-slate-800 text-xs text-slate-400 space-y-1">
-                    <strong className="text-white block font-medium">Final One-Time Setting in GitHub:</strong>
-                    <span>Go to your GitHub repo → <strong className="text-slate-200">Settings</strong> → <strong className="text-slate-200">Pages</strong> → under <strong className="text-slate-200">Build and deployment</strong>, set Source to <strong className="text-amber-400">"GitHub Actions"</strong>. Done!</span>
-                  </div>
+            {/* Tab 1: Drag & Drop (Easiest & Zero Terminal Errors) */}
+            {activeTab === 'direct-upload' && (
+              <div className="p-5 bg-slate-950 border border-slate-800 rounded-xl space-y-4">
+                <div className="flex items-center gap-2 text-xs font-bold text-amber-400">
+                  <UploadCloud className="w-4 h-4" />
+                  <span>No Git or Terminal needed — Upload in 2 minutes via your browser!</span>
                 </div>
-              ) : (
-                <div className="space-y-3">
-                  <p className="text-xs text-slate-300">
-                    Alternatively, deploy using the official <code className="text-amber-300 font-mono">gh-pages</code> npm script:
-                  </p>
 
-                  <div className="flex items-center justify-end">
-                    <button
-                      onClick={() => copyCode(ghPagesCliScript, 'ghCli')}
-                      className="flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 rounded-md transition-colors"
+                <ol className="text-xs text-slate-300 space-y-3 list-decimal list-inside leading-relaxed">
+                  <li className="pl-1">
+                    <strong className="text-white">Download and Extract:</strong> Click the yellow <strong>"Download Complete Project (ZIP)"</strong> button above and unzip it on your computer.
+                  </li>
+                  <li className="pl-1">
+                    <strong className="text-white">Create New Repo:</strong> Open{' '}
+                    <a 
+                      href="https://github.com/new" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="text-amber-400 underline font-medium"
                     >
-                      {copiedKey === 'ghCli' ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
-                      <span>{copiedKey === 'ghCli' ? 'Copied' : 'Copy Commands'}</span>
-                    </button>
-                  </div>
+                      github.com/new
+                    </a>{' '}
+                    in your browser and name the repository <code className="text-white bg-slate-800 px-1.5 py-0.5 rounded">portfolio</code>. Set it to <strong className="text-white">Public</strong> and click <strong className="text-white">Create repository</strong>.
+                  </li>
+                  <li className="pl-1">
+                    <strong className="text-white">Upload Files:</strong> On the new repository page, you will see a blue link: <em className="text-amber-300 not-italic font-medium">"uploading an existing file"</em>. Click it.
+                  </li>
+                  <li className="pl-1">
+                    <strong className="text-white">Drag & Drop:</strong> Select and drag all files from your extracted folder directly into the GitHub webpage box.
+                  </li>
+                  <li className="pl-1">
+                    <strong className="text-white">Commit Changes:</strong> Scroll down and click the green button <strong className="text-white">"Commit changes"</strong>.
+                  </li>
+                  <li className="pl-1">
+                    <strong className="text-white">Activate Free Hosting:</strong> In your GitHub repository, click <strong className="text-white">Settings</strong> → <strong className="text-white">Pages</strong>. Under <em>Build and deployment &gt; Source</em>, select <strong className="text-amber-400">GitHub Actions</strong>.
+                  </li>
+                </ol>
 
-                  <div className="bg-slate-950 rounded-xl p-4 font-mono text-xs text-slate-200 border border-slate-800 overflow-x-auto">
-                    <pre>{ghPagesCliScript}</pre>
-                  </div>
-
-                  <div className="p-3 bg-slate-950 rounded-lg border border-slate-800 text-xs text-slate-400 space-y-1">
-                    <strong className="text-white block font-medium">Setting in GitHub:</strong>
-                    <span>Go to Repo Settings → Pages → Source: Deploy from branch → choose <strong className="text-amber-400">gh-pages</strong> and folder <strong className="text-slate-200">/(root)</strong>.</span>
-                  </div>
+                <div className="p-3 bg-emerald-950/60 border border-emerald-500/40 rounded-lg text-xs text-emerald-200">
+                  🎉 That is all! In 60 seconds, GitHub will automatically build and publish your site at:{' '}
+                  <strong className="text-white block mt-1">https://ajjayya0421.github.io/portfolio/</strong>
                 </div>
-              )}
-            </div>
+              </div>
+            )}
+
+            {/* Tab 2: Terminal Git Commands */}
+            {activeTab === 'terminal' && (
+              <div className="p-5 bg-slate-950 border border-slate-800 rounded-xl space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-xs font-bold text-amber-400">
+                    <Terminal className="w-4 h-4" />
+                    <span>Run these commands in your computer's terminal:</span>
+                  </div>
+                  <button
+                    onClick={() => copyCode(gitPushScript, 'gitPush')}
+                    className="flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 rounded-md transition-colors"
+                  >
+                    {copiedKey === 'gitPush' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5 text-slate-400" />}
+                    <span>{copiedKey === 'gitPush' ? 'Copied!' : 'Copy All Commands'}</span>
+                  </button>
+                </div>
+
+                <div className="bg-slate-900 rounded-xl p-4 font-mono text-xs text-slate-200 border border-slate-800 overflow-x-auto">
+                  <pre>{gitPushScript}</pre>
+                </div>
+
+                {/* Common GitHub Authentication Error Fix */}
+                <div className="p-3.5 bg-slate-900 border border-amber-400/30 rounded-xl space-y-2">
+                  <div className="flex items-center gap-2 text-xs font-semibold text-amber-400">
+                    <AlertCircle className="w-4 h-4 shrink-0" />
+                    <span>Did Git ask for your password and reject it?</span>
+                  </div>
+                  <p className="text-xs text-slate-300 leading-relaxed">
+                    GitHub no longer accepts account passwords in the terminal. When prompted for password:
+                  </p>
+                  <ul className="text-xs text-slate-400 list-disc list-inside space-y-1">
+                    <li>
+                      Go to <a href="https://github.com/settings/tokens" target="_blank" rel="noreferrer" className="text-amber-400 underline">github.com/settings/tokens</a> → Generate new token (classic).
+                    </li>
+                    <li>Check the <strong>repo</strong> box and generate the token.</li>
+                    <li>Paste that token as your password in the terminal.</li>
+                    <li>Or simply use <strong className="text-white">GitHub Desktop</strong> which handles authentication automatically!</li>
+                  </ul>
+                </div>
+              </div>
+            )}
+
+            {/* Tab 3: GitHub Actions YAML */}
+            {activeTab === 'github-actions' && (
+              <div className="p-5 bg-slate-950 border border-slate-800 rounded-xl space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-xs font-mono text-slate-300">
+                    <FileCode className="w-4 h-4 text-amber-400" />
+                    <span>.github/workflows/deploy.yml</span>
+                  </div>
+                  <button
+                    onClick={() => copyCode(githubActionsWorkflow, 'workflow')}
+                    className="flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 rounded-md transition-colors"
+                  >
+                    {copiedKey === 'workflow' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5 text-slate-400" />}
+                    <span>{copiedKey === 'workflow' ? 'Copied' : 'Copy Workflow'}</span>
+                  </button>
+                </div>
+
+                <p className="text-xs text-slate-400">
+                  This workflow is already included inside the downloaded ZIP file. Whenever you commit changes to the <code className="text-amber-300 font-mono">main</code> branch, GitHub Pages will automatically build and host the new version.
+                </p>
+
+                <div className="bg-slate-900 rounded-xl p-4 font-mono text-xs text-slate-200 border border-slate-800 overflow-x-auto max-h-52">
+                  <pre>{githubActionsWorkflow}</pre>
+                </div>
+              </div>
+            )}
           </div>
 
-          {/* Vite Base URL Reminder */}
-          <div className="p-4 bg-slate-950 border border-slate-800 rounded-xl flex items-start gap-3">
-            <AlertCircle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-            <div className="text-xs text-slate-300 leading-relaxed">
-              <strong className="text-white font-semibold">Important Vite Note:</strong> If your repository URL is <code className="text-amber-300 font-mono">github.com/Ajjayya0421/portfolio</code>, set <code className="text-amber-300 font-mono">base: '/portfolio/'</code> in your <code className="text-slate-200 font-mono">vite.config.ts</code>. If you name your repository <code className="text-amber-300 font-mono">Ajjayya0421.github.io</code>, you can keep <code className="text-amber-300 font-mono">base: '/'</code>.
-            </div>
+          {/* Quick Links */}
+          <div className="pt-2 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-400">
+            <span>Repository Target: <strong className="text-white">https://github.com/Ajjayya0421/portfolio</strong></span>
+            <a 
+              href="https://github.com/Ajjayya0421" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-amber-400 hover:underline flex items-center gap-1"
+            >
+              <span>Visit your GitHub</span>
+              <ExternalLink className="w-3 h-3" />
+            </a>
           </div>
 
         </div>
 
         {/* Modal Footer */}
         <div className="p-4 bg-slate-900 border-t border-slate-800 flex items-center justify-between shrink-0">
-          <div className="text-xs text-slate-400">
+          <span className="text-xs text-slate-400">
             Ajjayya N H · Computer Science & Engineering
-          </div>
+          </span>
           <button
             onClick={onClose}
-            className="px-4 py-1.5 text-xs font-semibold text-slate-950 bg-amber-400 hover:bg-amber-300 rounded-lg transition-colors"
+            className="px-4 py-2 text-xs font-semibold text-slate-950 bg-amber-400 hover:bg-amber-300 rounded-lg transition-colors shadow-sm"
           >
-            Got it, Let's Deploy!
+            Close & Start Upload
           </button>
         </div>
 
