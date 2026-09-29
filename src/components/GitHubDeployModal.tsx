@@ -233,44 +233,44 @@ jobs:
             {/* Tab 1: Drag & Drop (Easiest & Zero Terminal Errors) */}
             {activeTab === 'direct-upload' && (
               <div className="p-5 bg-slate-950 border border-slate-800 rounded-xl space-y-4">
-                <div className="flex items-center gap-2 text-xs font-bold text-amber-400">
+                <div className="flex items-center gap-2 text-xs font-bold text-emerald-400">
                   <UploadCloud className="w-4 h-4" />
-                  <span>No Git or Terminal needed — Upload in 2 minutes via your browser!</span>
+                  <span>The 30-Second Zero-Error Method (Works directly with My_resume1)</span>
+                </div>
+
+                <div className="p-3 bg-emerald-950/40 border border-emerald-500/30 rounded-lg text-xs text-emerald-200 space-y-1">
+                  <div className="font-bold text-white">⭐ For your existing repository: <code className="bg-slate-900 px-1.5 py-0.5 rounded text-amber-300">My_resume1</code></div>
+                  <p>You do not need to install Node.js, run terminal commands, or set up GitHub Actions if you use the 1-File HTML below.</p>
                 </div>
 
                 <ol className="text-xs text-slate-300 space-y-3 list-decimal list-inside leading-relaxed">
                   <li className="pl-1">
-                    <strong className="text-white">Download and Extract:</strong> Click the yellow <strong>"Download Complete Project (ZIP)"</strong> button above and unzip it on your computer.
+                    <strong className="text-white">Download the Standalone File:</strong> Click the green button above: <strong className="text-emerald-400">"Instant 1-File index.html (Zero Error)"</strong>.
                   </li>
                   <li className="pl-1">
-                    <strong className="text-white">Create New Repo:</strong> Open{' '}
+                    <strong className="text-white">Open Your GitHub Repository:</strong> Go to{' '}
                     <a 
-                      href="https://github.com/new" 
+                      href="https://github.com/Ajjayya0421/My_resume1" 
                       target="_blank" 
                       rel="noopener noreferrer" 
                       className="text-amber-400 underline font-medium"
                     >
-                      github.com/new
-                    </a>{' '}
-                    in your browser and name the repository <code className="text-white bg-slate-800 px-1.5 py-0.5 rounded">portfolio</code>. Set it to <strong className="text-white">Public</strong> and click <strong className="text-white">Create repository</strong>.
+                      https://github.com/Ajjayya0421/My_resume1
+                    </a>
                   </li>
                   <li className="pl-1">
-                    <strong className="text-white">Upload Files:</strong> On the new repository page, you will see a blue link: <em className="text-amber-300 not-italic font-medium">"uploading an existing file"</em>. Click it.
+                    <strong className="text-white">Upload and Replace:</strong> Click <strong className="text-white">Add file</strong> ➔ <strong className="text-white">Upload files</strong>. Drag and drop the downloaded <code className="text-white bg-slate-800 px-1 rounded">index.html</code> file.
                   </li>
                   <li className="pl-1">
-                    <strong className="text-white">Drag & Drop:</strong> Select and drag all files from your extracted folder directly into the GitHub webpage box.
+                    <strong className="text-white">Commit Changes:</strong> Click the green button <strong className="text-white">"Commit changes"</strong>.
                   </li>
                   <li className="pl-1">
-                    <strong className="text-white">Commit Changes:</strong> Scroll down and click the green button <strong className="text-white">"Commit changes"</strong>.
-                  </li>
-                  <li className="pl-1">
-                    <strong className="text-white">Activate Free Hosting:</strong> In your GitHub repository, click <strong className="text-white">Settings</strong> → <strong className="text-white">Pages</strong>. Under <em>Build and deployment &gt; Source</em>, select <strong className="text-amber-400">GitHub Actions</strong>.
+                    <strong className="text-white">Ensure GitHub Pages is active:</strong> Go to <strong className="text-white">Settings</strong> ➔ <strong className="text-white">Pages</strong>. Make sure <em>Source</em> is set to <strong className="text-amber-400">Deploy from a branch</strong>, branch is <strong className="text-white">main</strong> (or master) and folder is <strong className="text-white">/ (root)</strong>.
                   </li>
                 </ol>
 
-                <div className="p-3 bg-emerald-950/60 border border-emerald-500/40 rounded-lg text-xs text-emerald-200">
-                  🎉 That is all! In 60 seconds, GitHub will automatically build and publish your site at:{' '}
-                  <strong className="text-white block mt-1">https://ajjayya0421.github.io/portfolio/</strong>
+                <div className="p-3 bg-amber-950/40 border border-amber-500/30 rounded-lg text-xs text-amber-200">
+                  ⚡ <strong>Result:</strong> Refresh <a href="https://ajjayya0421.github.io/My_resume1/" target="_blank" rel="noopener noreferrer" className="underline font-bold text-white">https://ajjayya0421.github.io/My_resume1/</a> after 30 seconds. Your complete resume, CGPA, projects, and contact info will load flawlessly with zero errors!
                 </div>
               </div>
             )}
