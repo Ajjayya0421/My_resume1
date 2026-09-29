@@ -154,23 +154,32 @@ jobs:
               Because this website is currently running in your preview environment, you need to download the project files to your device before uploading them to your GitHub account:
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
               <a
-                href="./portfolio-complete.zip"
-                download="portfolio-complete.zip"
-                className="flex items-center justify-center gap-2 px-4 py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs rounded-lg transition-all shadow-md text-center"
+                href="./standalone-index.html"
+                download="index.html"
+                className="flex items-center justify-center gap-2 px-3 py-2.5 bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-bold text-xs rounded-lg transition-all shadow-md text-center"
               >
                 <Download className="w-4 h-4" />
-                <span>Download Complete Project (ZIP)</span>
+                <span>Instant 1-File index.html (Zero Error)</span>
               </a>
 
               <a
                 href="./portfolio-production-build.zip"
                 download="portfolio-dist.zip"
-                className="flex items-center justify-center gap-2 px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-medium text-xs rounded-lg border border-slate-700 transition-all text-center"
+                className="flex items-center justify-center gap-2 px-3 py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs rounded-lg transition-all shadow-md text-center"
               >
-                <Layers className="w-4 h-4 text-amber-400" />
-                <span>Download Pre-built Dist (ZIP)</span>
+                <Layers className="w-4 h-4" />
+                <span>Pre-built Dist (ZIP)</span>
+              </a>
+
+              <a
+                href="./portfolio-complete.zip"
+                download="portfolio-complete.zip"
+                className="flex items-center justify-center gap-2 px-3 py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-medium text-xs rounded-lg border border-slate-700 transition-all text-center"
+              >
+                <Download className="w-4 h-4 text-amber-400" />
+                <span>Complete Project (ZIP)</span>
               </a>
             </div>
 
