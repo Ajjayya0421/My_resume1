@@ -16,6 +16,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResume, onOpenDeployGuide 
     { name: 'Skills', href: '#skills' },
     { name: 'Education', href: '#education' },
     { name: 'Certifications', href: '#certifications' },
+    { name: 'Resume', href: '#resume' },
     { name: 'Contact', href: '#contact' },
   ];
 

@@ -5,6 +5,7 @@ import { Projects } from './components/Projects';
 import { Skills } from './components/Skills';
 import { Education } from './components/Education';
 import { CertificationsAndSports } from './components/CertificationsAndSports';
+import { ResumeSection } from './components/ResumeSection';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { ResumeModal } from './components/ResumeModal';
@@ -53,6 +54,9 @@ export default function App() {
 
         {/* Certifications & Sports Distinctions */}
         <CertificationsAndSports />
+
+        {/* Full In-Page Resume & Credentials */}
+        <ResumeSection onOpenResumeModal={() => setIsResumeOpen(true)} />
 
         {/* Contact & Inquiries */}
         <Contact />
